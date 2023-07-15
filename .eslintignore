@@ -1,0 +1,13 @@
+.next
+next-env.d.ts
+node_modules
+public
+yarn.lock
+package-lock.json
+pnpm-lock.yaml
+
+components/**/*
+
+tailwind.config.js
+next.config.js
+commitlint.config.js
