@@ -1,4 +1,4 @@
-# Lime
+# Lime 🍋
 
 An easy way to build ecommerce stores fast.
 
