@@ -3,12 +3,13 @@ import GoogleProvider from 'next-auth/providers/google';
 import EmailProvider from 'next-auth/providers/email';
 import { env } from '@/env';
 import { sendVerificationRequest } from '@/lib/custom-email';
-import { PrismaAdapter } from '@auth/prisma-adapter';
 import { prisma } from '@/lib/db';
-import { Adapter } from 'next-auth/adapters';
+import { PrismaAdapter } from '@auth/prisma-adapter';
+import type { Adapter } from 'next-auth/adapters';
 
 export const authOptions: AuthOptions = {
   adapter: PrismaAdapter(prisma) as Adapter,
+
   providers: [
     GoogleProvider({
       clientId: env.GOOGLE_CLIENT_ID,
@@ -26,7 +27,10 @@ export const authOptions: AuthOptions = {
       from: env.EMAIL_FROM,
       sendVerificationRequest: sendVerificationRequest
     })
-  ]
+  ],
+  pages: {
+    signIn: '/signIn'
+  }
 };
 
 const handler = NextAuth(authOptions);
