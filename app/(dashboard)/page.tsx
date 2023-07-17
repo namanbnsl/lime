@@ -1,5 +1,5 @@
 const HomePage = () => {
-  return <>Hi</>;
+  return <>Protected Dashboard</>;
 };
 
 export default HomePage;
