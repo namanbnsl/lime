@@ -13,6 +13,10 @@ const Navbar = () => {
     {
       name: 'Dashboard',
       href: '/'
+    },
+    {
+      name: 'Products',
+      href: '/products'
     }
   ];
 
@@ -20,11 +24,8 @@ const Navbar = () => {
 
   return (
     <nav className="flex h-20 border-b justify-between items-center px-10">
-      <Link
-        href={'/'}
-        className="underline font-bold hover:text-muted-foreground"
-      >
-        lime
+      <Link href={'/'} className="font-bold hover:text-muted-foreground">
+        🍋 lime
       </Link>
 
       <div className="gap-x-4 flex">

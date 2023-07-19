@@ -54,8 +54,18 @@ model VerificationToken {
 }
 
 model Store {
-  id     String @id @default(cuid())
-  name   String
-  userId String @unique
-  user   User   @relation(fields: [userId], references: [id])
+  id       String    @id @default(cuid())
+  name     String
+  userId   String    @unique
+  user     User      @relation(fields: [userId], references: [id])
+  products Product[]
+}
+
+model Product {
+  id       String @id @default(cuid())
+  name     String
+  price    String
+  imageUrl String
+  storeId  String
+  store    Store  @relation(fields: [storeId], references: [id])
 }
