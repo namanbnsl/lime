@@ -49,6 +49,8 @@ Open your browser and visit http://localhost:3000 to see the application running
 
 ## How to Contribute
 
+Run ```pnpm format``` before conrtibuting.
+
 ### Working on New Features
 
 If you want to work on a new feature, follow these steps.
