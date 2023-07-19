@@ -1,21 +1,24 @@
-name: "CI setup"
-description: "utility for calling other actions"
+name: 'CI setup'
+description: 'utility for calling other actions'
 runs:
-  using: "composite"
+  using: 'composite'
   steps:
     - name: Setup Node.js
       uses: actions/setup-node@v3
       with:
         node-version: ${{ env.NODE_VERSION }}
-        cache: "npm"
+        cache: 'pnpm' # Change the package manager to PNPM
 
     - name: Install dependencies
-      run: npm install
+      run: pnpx pnpm install # Use `pnpx pnpm install` to install dependencies with PNPM
       shell: bash
 
-    - name: Cache NPM dependencies
+    - name: Cache PNPM dependencies
       uses: actions/cache@v3
       id: cache-primes
       with:
-        path: node_modules
-        key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+        path: ~/.pnpm-store # Cache the PNPM store
+        key: ${{ runner.os }}-node-${{ hashFiles('pnpm-lock.yaml') }} # Use 'pnpm-lock.yaml' for hashFiles
+
+
+    # Add other steps as needed for your workflow
