@@ -11,7 +11,7 @@ runs:
         run: npm i -g pnpm
 
     - name: Install dependencies
-      run: pnpx pnpm install # Use `pnpx pnpm install` to install dependencies with PNPM
+      run: pnpm install # Use `pnpx pnpm install` to install dependencies with PNPM
       shell: bash
 
     - name: Cache PNPM dependencies
@@ -20,6 +20,3 @@ runs:
       with:
         path: ~/.pnpm-store # Cache the PNPM store
         key: ${{ runner.os }}-node-${{ hashFiles('pnpm-lock.yaml') }} # Use 'pnpm-lock.yaml' for hashFiles
-
-
-    # Add other steps as needed for your workflow
