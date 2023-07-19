@@ -19,7 +19,7 @@ To get started with Lime locally, follow these steps
 2. Navigate to the project directory
 
    ```sh
-   cd ecommerce-admin
+   cd lime
    ```
 
 3. Install NPM packages(We suggest using `pnpm`)
