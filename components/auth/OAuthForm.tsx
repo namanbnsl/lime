@@ -21,9 +21,12 @@ import { signIn } from 'next-auth/react';
 
 const OAuthForm = () => {
   const formSchema = z.object({
-    email: z.string().min(3, {
-      message: 'Invalid Email.'
-    })
+    email: z
+      .string()
+      .min(3, {
+        message: 'Invalid Email.'
+      })
+      .email()
   });
 
   const form = useForm<z.infer<typeof formSchema>>({

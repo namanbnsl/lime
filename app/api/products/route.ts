@@ -4,7 +4,13 @@ import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
 
 export async function POST(req: Request) {
-  const { email, name } = await req.json();
+  const {
+    email,
+    name,
+    imageUrl,
+    price
+  }: { price: string; email: string; name: string; imageUrl: string } =
+    await req.json();
 
   const session = await getServerSession(authOptions);
 
@@ -19,16 +25,18 @@ export async function POST(req: Request) {
     }
   });
 
-  if (user?.store) {
-    return new NextResponse('Store already exists', { status: 500 });
+  if (!user?.store) {
+    return new NextResponse('No store exists.', { status: 500 });
   }
 
-  const store = await prisma.store.create({
+  const product = await prisma.product.create({
     data: {
       name,
-      userId: user?.id as string
+      imageUrl,
+      price: price.toString(),
+      storeId: user.store.id
     }
   });
 
-  return NextResponse.json({ store });
+  return NextResponse.json({ product });
 }
