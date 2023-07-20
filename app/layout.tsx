@@ -1,5 +1,6 @@
 import '@uploadthing/react/styles.css';
 import './globals.css';
+
 import AuthContext from '@/components/auth/AuthContext';
 import type { Metadata } from 'next';
 import { Poppins } from 'next/font/google';

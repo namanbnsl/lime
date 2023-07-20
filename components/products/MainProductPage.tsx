@@ -76,10 +76,12 @@ const columns: ColumnDef<Product>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem className="cursor-pointer flex">
-              Edit {row.original.name}
-              <Edit className="w-4 h-4 ml-2" />
-            </DropdownMenuItem>
+            <Link href={`/products/edit/${row.original.id}`} className="flex">
+              <DropdownMenuItem className="cursor-pointer flex">
+                Edit {row.original.name}
+                <Edit className="w-4 h-4 ml-2" />
+              </DropdownMenuItem>
+            </Link>
           </DropdownMenuContent>
         </DropdownMenu>
       );

@@ -49,7 +49,7 @@ Open your browser and visit http://localhost:3000 to see the application running
 
 ## How to Contribute
 
-Run ```pnpm format``` before conrtibuting.
+Run `pnpm format` before conrtibuting.
 
 ### Working on New Features
 
