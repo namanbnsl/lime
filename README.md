@@ -69,3 +69,9 @@ You should pull in the changes that we add, preferably before you checkout a new
 
 1. git checkout main
 2. git pull upstream main
+
+### Done
+
+- [x] Store Creation
+- [x] Products Page
+- [x] Edit Products Page
