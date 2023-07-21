@@ -13,13 +13,24 @@ const ProductsPage = async () => {
     select: {
       store: {
         select: {
+          id: true,
           products: true
         }
       }
     }
   });
 
-  return <MainProductPage data={data?.store?.products ?? []} />;
+  const products =
+    data?.store?.products.map((item) => ({
+      id: item.id,
+      name: item.name,
+      price: parseFloat(item.price),
+      imageUrl: item.imageUrl
+    })) ?? [];
+
+  return (
+    <MainProductPage data={products} storeId={data?.store?.id as string} />
+  );
 };
 
 export default ProductsPage;

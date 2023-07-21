@@ -5,7 +5,7 @@ import { Button } from '../ui/button';
 import { Heading } from '../ui/heading';
 import { Separator } from '../ui/separator';
 import Link from 'next/link';
-import { DataTable } from '../ui/data-table';
+import { DataTable } from './data-table';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,14 +13,20 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger
 } from '../ui/dropdown-menu';
-import { Product } from '@prisma/client';
 import { ColumnDef } from '@tanstack/react-table';
+import ApiAlert from '../ui/api-alert';
 
 interface Props {
-  data: Product[];
+  data: { id: string; name: string; price: number; imageUrl: string }[];
+  storeId: string;
 }
 
-const columns: ColumnDef<Product>[] = [
+const columns: ColumnDef<{
+  id: string;
+  name: string;
+  price: number;
+  imageUrl: string;
+}>[] = [
   {
     accessorKey: 'name',
     header: 'Name'
@@ -89,7 +95,7 @@ const columns: ColumnDef<Product>[] = [
   }
 ];
 
-const MainProductPage = ({ data }: Props) => {
+const MainProductPage = ({ data, storeId }: Props) => {
   return (
     <div className="p-6">
       <div className="flex justify-between items-center">
@@ -109,6 +115,20 @@ const MainProductPage = ({ data }: Props) => {
 
       <div className="w-[45%]">
         <DataTable columns={columns} data={data} />
+      </div>
+
+      <div className="w-[60%] flex flex-col gap-y-2">
+        <ApiAlert
+          title="Your Store ID."
+          directUrl={storeId}
+          extraDesc="Keep this safe!. If anyone gets access to it they can take data from your store."
+          toastMessage="Copied storeId."
+          toastDesc="Paste this in our SDK."
+        />
+        <ApiAlert
+          title="Get All Products"
+          route={`/api/public/products/getAllProducts?storeId=${storeId}`}
+        />
       </div>
     </div>
   );
