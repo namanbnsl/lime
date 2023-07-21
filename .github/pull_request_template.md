@@ -32,4 +32,3 @@ on the devices and browsers this has been tested on, as well as any relevant
 images for UI changes. -->
 
 ## [optional] Are there any post deployment tasks we need to perform?
-

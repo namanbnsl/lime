@@ -1,0 +1,22 @@
+{
+  "name": "@lime-npm/js-sdk",
+  "version": "0.0.0",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "scripts": {
+    "build": "rimraf build && tsc",
+    "lint": "eslint . --ext .ts"
+  },
+  "description": "",
+  "keywords": [],
+  "devDependencies": {
+    "@types/es6-promise": "^3.3.0",
+    "@typescript-eslint/eslint-plugin": "^5.58.0",
+    "@typescript-eslint/parser": "^5.58.0",
+    "eslint": "^8.38.0",
+    "rimraf": "^5.0.0",
+    "typescript": "^5.0.4"
+  },
+  "author": "lime",
+  "license": "ISC"
+}
