@@ -22,5 +22,15 @@ export async function GET(req: Request) {
       imageUrl: item.imageUrl
     })) ?? [];
 
-  return NextResponse.json({ message: 'Success', data: products });
+  return NextResponse.json(
+    { message: 'Success', data: products },
+    {
+      status: 200,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization'
+      }
+    }
+  );
 }
