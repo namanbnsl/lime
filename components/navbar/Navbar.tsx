@@ -17,6 +17,10 @@ const Navbar = () => {
     {
       name: 'Products',
       href: '/products'
+    },
+    {
+      name: 'Categories',
+      href: '/categories'
     }
   ];
 

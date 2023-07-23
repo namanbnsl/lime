@@ -10,9 +10,13 @@
     <script type="module">
       import * as lime from '../build/index.js';
 
-      const data = await lime.getAllProducts('clk9mvms30006pkq8dennrvsm');
+      const data = await lime.getAllProducts('clkebeeab0006pk14qxsi6708');
+      const categories = await lime.getAllCategories(
+        'clkebeeab0006pk14qxsi6708'
+      ); // [] - returns array of all categories in store
 
-      console.log(data);
+      console.log('Products: ', data);
+      console.log('Categories: ', categories);
     </script>
   </body>
 </html>

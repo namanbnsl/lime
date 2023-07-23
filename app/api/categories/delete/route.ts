@@ -4,19 +4,8 @@ import { prisma } from '@/lib/db';
 import { authOptions } from '../../auth/[...nextauth]/route';
 
 export async function POST(req: Request) {
-  const {
-    productId,
-    name,
-    imageUrl,
-    category,
-    price
-  }: {
-    price: string;
-    name: string;
-    imageUrl: string;
-    productId: string;
-    category: string;
-  } = await req.json();
+  const { categoryId, productId }: { categoryId: string; productId: string } =
+    await req.json();
 
   const session = await getServerSession(authOptions);
 
@@ -24,21 +13,18 @@ export async function POST(req: Request) {
     return new NextResponse('Unauthorized', { status: 401 });
   }
 
-  const product = await prisma.product.update({
+  const category = await prisma.product.update({
     where: {
       id: productId
     },
     data: {
-      name,
-      imageUrl,
-      price: price.toString(),
       category: {
-        connect: {
-          id: category
+        disconnect: {
+          id: categoryId
         }
       }
     }
   });
 
-  return NextResponse.json({ product });
+  return NextResponse.json({ category });
 }

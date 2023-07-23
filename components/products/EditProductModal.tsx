@@ -21,18 +21,28 @@ import {
   FormMessage
 } from '../ui/form';
 import { Input } from '../ui/input';
-import { Session } from 'next-auth';
 import axios from 'axios';
 import { toast } from '../ui/use-toast';
 import { useState } from 'react';
 import { Icons } from '../ui/icons';
-import { useRouter } from 'next/navigation';
+import { Check, ChevronsUpDown } from 'lucide-react';
+import { Category, Product } from '@prisma/client';
 import { UploadDropzone } from '@/lib/uploadthing';
-import { Check } from 'lucide-react';
-import { Product } from '@prisma/client';
+import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
+import { cn } from '@/lib/utils';
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem
+} from '../ui/command';
 
 const formSchema = z.object({
   price: z.number().min(1),
+  category: z.string({
+    required_error: 'Please select a category.'
+  }),
   name: z
     .string()
     .min(2, {
@@ -44,11 +54,22 @@ const formSchema = z.object({
 });
 
 const EditProductModal = ({
-  session,
-  product
+  product,
+  allCategories
 }: {
-  session: Session;
-  product: Product;
+  allCategories: {
+    name: string;
+    id: string;
+    storeId: string;
+  }[];
+  product: {
+    id: string;
+    name: string;
+    imageUrl: string;
+    price: string;
+    storeId: string;
+    category: Category;
+  };
 }) => {
   const [loading, setLoading] = useState(false);
   const [files, setFiles] = useState<any>([{ fileUrl: product.imageUrl }]);
@@ -58,11 +79,10 @@ const EditProductModal = ({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: product.name,
+      category: product.category.name,
       price: parseFloat(product.price)
     }
   });
-
-  const router = useRouter();
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
@@ -74,7 +94,8 @@ const EditProductModal = ({
         productId: z.string(),
         name: z.string(),
         imageUrl: z.string(),
-        price: z.number()
+        price: z.number(),
+        category: z.string()
       });
 
       let payload: z.infer<typeof body>;
@@ -84,20 +105,22 @@ const EditProductModal = ({
           productId: product.id,
           name: values.name,
           imageUrl: newFiles[0].fileUrl,
-          price: values.price
+          price: values.price,
+          category: values.category
         };
       } else {
         payload = {
           productId: product.id,
           name: values.name,
           imageUrl: files[0].fileUrl,
-          price: values.price
+          price: values.price,
+          category: values.category
         };
       }
 
       await axios.post('/api/products/edit', payload);
 
-      router.push('/products');
+      window.location.replace('/products');
 
       return toast({
         title: `${values.name} Product upadted.`,
@@ -121,6 +144,13 @@ const EditProductModal = ({
       setLoading(false);
     }
   }
+
+  const categories = allCategories.map((category) => {
+    return {
+      value: category.id,
+      label: category.name
+    };
+  });
 
   return (
     <div className="flex w-screen h-[90vh] justify-center items-center">
@@ -170,6 +200,67 @@ const EditProductModal = ({
                     </FormControl>
                     <FormDescription>
                       This is your product's price.
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="category"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col">
+                    <FormLabel className="mb-2">Category</FormLabel>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <FormControl>
+                          <Button
+                            variant="outline"
+                            role="combobox"
+                            className={cn(
+                              'w-[200px] justify-between',
+                              !field.value && 'text-muted-foreground'
+                            )}
+                          >
+                            {field.value
+                              ? categories.find(
+                                  (language) => language.value === field.value
+                                )?.label
+                              : 'Select category'}
+                            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-[200px] p-0">
+                        <Command>
+                          <CommandInput placeholder="Search framework..." />
+                          <CommandEmpty>No category found.</CommandEmpty>
+                          <CommandGroup>
+                            {categories.map((category) => (
+                              <CommandItem
+                                value={category.value}
+                                key={category.value}
+                                onSelect={(value) => {
+                                  form.setValue('category', value);
+                                }}
+                              >
+                                <Check
+                                  className={cn(
+                                    'mr-2 h-4 w-4',
+                                    category.value === field.value
+                                      ? 'opacity-100'
+                                      : 'opacity-0'
+                                  )}
+                                />
+                                {category.label}
+                              </CommandItem>
+                            ))}
+                          </CommandGroup>
+                        </Command>
+                      </PopoverContent>
+                    </Popover>
+                    <FormDescription>
+                      This is the category that will be used for the product.
                     </FormDescription>
                     <FormMessage />
                   </FormItem>

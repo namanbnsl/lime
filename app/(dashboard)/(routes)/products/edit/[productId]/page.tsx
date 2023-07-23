@@ -1,21 +1,50 @@
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import EditProductModal from '@/components/products/EditProductModal';
 import { prisma } from '@/lib/db';
-import { Product } from '@prisma/client';
-import { Session, getServerSession } from 'next-auth';
+import { Category } from '@prisma/client';
 
 const EditProduct = async ({ params }: { params: { productId: string } }) => {
-  const session = await getServerSession(authOptions);
   const product = await prisma.product.findUnique({
+    select: {
+      id: true,
+      name: true,
+      imageUrl: true,
+      price: true,
+      storeId: true,
+      category: true
+    },
     where: {
       id: params.productId
     }
   });
 
+  const data = await prisma.store.findUnique({
+    select: {
+      category: true
+    },
+    where: {
+      id: product?.storeId
+    }
+  });
+
   return (
     <EditProductModal
-      session={session as Session}
-      product={product as Product}
+      allCategories={
+        data?.category as unknown as {
+          id: string;
+          name: string;
+          storeId: string;
+        }[]
+      }
+      product={
+        product as unknown as {
+          id: string;
+          name: string;
+          imageUrl: string;
+          price: string;
+          storeId: string;
+          category: Category;
+        }
+      }
     />
   );
 };

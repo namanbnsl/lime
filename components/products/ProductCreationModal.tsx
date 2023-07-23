@@ -26,9 +26,8 @@ import axios from 'axios';
 import { toast } from '../ui/use-toast';
 import { useState } from 'react';
 import { Icons } from '../ui/icons';
-import { useRouter } from 'next/navigation';
 import { UploadDropzone } from '@/lib/uploadthing';
-import { Check, CheckCircle } from 'lucide-react';
+import { Check } from 'lucide-react';
 
 const formSchema = z.object({
   price: z.number().min(1),
@@ -53,8 +52,6 @@ const ProductCreationModal = ({ session }: { session: Session }) => {
     }
   });
 
-  const router = useRouter();
-
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       setLoading(true);
@@ -77,7 +74,7 @@ const ProductCreationModal = ({ session }: { session: Session }) => {
 
       await axios.post('/api/products', payload);
 
-      router.push('/products');
+      window.location.replace('/products');
 
       return toast({
         title: `${values.name} Product created.`,

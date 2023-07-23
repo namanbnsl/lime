@@ -9,32 +9,15 @@ export async function GET(req: Request) {
 
   const data = await prisma.store.findUnique({
     select: {
-      products: {
-        select: {
-          name: true,
-          id: true,
-          price: true,
-          imageUrl: true,
-          category: true
-        }
-      }
+      category: true
     },
     where: {
       id: id as string
     }
   });
 
-  const products =
-    data?.products.map((item) => ({
-      id: item.id,
-      name: item.name,
-      price: parseFloat(item.price),
-      category: item.category,
-      imageUrl: item.imageUrl
-    })) ?? [];
-
   return NextResponse.json(
-    { message: 'Success', data: products },
+    { message: 'Success', data: data?.category },
     {
       status: 200,
       headers: {

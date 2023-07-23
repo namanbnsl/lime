@@ -14,7 +14,15 @@ const ProductsPage = async () => {
       store: {
         select: {
           id: true,
-          products: true
+          products: {
+            select: {
+              id: true,
+              imageUrl: true,
+              category: true,
+              name: true,
+              price: true
+            }
+          }
         }
       }
     }
@@ -24,6 +32,7 @@ const ProductsPage = async () => {
     data?.store?.products.map((item) => ({
       id: item.id,
       name: item.name,
+      category: item.category,
       price: parseFloat(item.price),
       imageUrl: item.imageUrl
     })) ?? [];
