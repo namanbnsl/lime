@@ -40,9 +40,7 @@ import {
 
 const formSchema = z.object({
   price: z.number().min(1),
-  category: z.string({
-    required_error: 'Please select a category.'
-  }),
+  category: z.string(),
   name: z
     .string()
     .min(2, {
@@ -106,7 +104,7 @@ const EditProductModal = ({
           name: values.name,
           imageUrl: newFiles[0].fileUrl,
           price: values.price,
-          category: values.category
+          category: values.category ?? []
         };
       } else {
         payload = {
@@ -114,7 +112,7 @@ const EditProductModal = ({
           name: values.name,
           imageUrl: files[0].fileUrl,
           price: values.price,
-          category: values.category
+          category: values.category ?? []
         };
       }
 

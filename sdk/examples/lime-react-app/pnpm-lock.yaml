@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@lime-npm/js-sdk':
-    specifier: ^0.0.1
-    version: 0.0.1
+    specifier: ^0.0.3
+    version: 0.0.3
   react:
     specifier: ^18.2.0
     version: 18.2.0
@@ -309,8 +309,8 @@ packages:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
     dev: true
 
-  /@lime-npm/js-sdk@0.0.1:
-    resolution: {integrity: sha512-KkgXI8w7RWa7QfNSaF7W/Bs7rF1omw7CVcChG6TUvWEVuRinhDqcUyrZUXpi3R7kWQGErMztZceLZl1OtCII2w==}
+  /@lime-npm/js-sdk@0.0.3:
+    resolution: {integrity: sha512-axF56KWO9cqMYB+caLhCFABgSvSePK3HaSNOEBmU/+c6eT3PXqgt0WmddIjR3lN4H7ZQiRsXDEnoavZZtNjZ2A==}
     dev: false
 
   /@nodelib/fs.scandir@2.1.5:
