@@ -13,8 +13,8 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: 'Admin Dashboard',
-  description: 'Admin Dashboard'
+  title: 'lime',
+  description: 'lime admin dashboard'
 };
 
 export default function RootLayout({

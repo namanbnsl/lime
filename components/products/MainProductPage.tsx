@@ -27,6 +27,7 @@ import { CategoryBadge } from './CategoryBadge';
 import { useState } from 'react';
 import { toast } from '../ui/use-toast';
 import { useRouter } from 'next/navigation';
+import DeleteProduct from './DeleteProduct';
 
 interface Props {
   data: {
@@ -166,6 +167,10 @@ const MainProductPage = ({ data, storeId }: Props) => {
                   <Plus className="w-4 h-4 ml-2" />
                 </DropdownMenuItem>
               </Link>
+              <DeleteProduct
+                name={row.original.name}
+                productId={row.original.id}
+              />
             </DropdownMenuContent>
           </DropdownMenu>
         );
